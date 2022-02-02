@@ -13,6 +13,7 @@ function Home() {
     const [priceSort, setPriceSort] = useState("no");
     const [topProducts, setTopProducts] = useState([]);
     const [productName, setProductName] = useState("");
+    const [loading, setLoading] = useState(true);
 
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -22,6 +23,8 @@ function Home() {
         setPriceSort(price ? price : "no");
         setProductName(product ? product : "");
         getProducts().catch(() => {});
+
+        setLoading(false)
     }, []);
 
     useEffect(() => {
@@ -30,6 +33,12 @@ function Home() {
         } else {
             setSearchParams({});
         }
+
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+        }, 800)
+
     }, [priceSort, productName]);
 
     const getProducts = async () => {
@@ -56,26 +65,25 @@ function Home() {
     };
 
     return (
-        <div>
-            <Container maxWidth="xl">
-                <Grid container spacing={2} mt={2}>
-                    <Grid container>
-                        <FilterForm handleSearchProduct={handleSearchProduct} topProducts={topProducts} handleChange={handleChange} priceSort={priceSort} productName={productName}/>
-                    </Grid>
-                    <Grid container spacing={2} >
-                        {[...products].filter(item => productName === "" ? true : item.name===productName).sort((a, b) => {
-                            if (priceSort === "asc"){ 
-                                return a.price < b.price ? -1 : 1
-                            } else if (priceSort === "desc"){
-                                return a.price > b.price ? -1 : 1
-                            } else {
-                                return 0;
-                            }
-                        }).map((product) => (<ProductCard key={product.id} product={product} />))}
-                    </Grid> 
+        <Container maxWidth="xl">
+            <Grid container spacing={2} mt={2}>
+                <Grid container>
+                    <FilterForm handleSearchProduct={handleSearchProduct} topProducts={topProducts} handleChange={handleChange} priceSort={priceSort} productName={productName}/>
                 </Grid>
-            </Container>
-        </div>
+                <Grid container spacing={2} >
+                {loading ? (<div class="loader">Loading...</div>) : (
+                    [...products].filter(item => productName === "" ? true : item.name===productName).sort((a, b) => {
+                        if (priceSort === "asc"){ 
+                            return a.price < b.price ? -1 : 1
+                        } else if (priceSort === "desc"){
+                            return a.price > b.price ? -1 : 1
+                        } else {
+                            return 0;
+                        }
+                    }).map((product) => (<ProductCard key={product.id} product={product} />)))}
+                </Grid> 
+            </Grid>
+        </Container>    
     );
 }
 

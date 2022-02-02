@@ -31,7 +31,7 @@ function ProductCard({product: {id, name, price, description, shortDescription}}
                 </Typography>
             </CardContent>
             <CardActions>
-                <Link to="/detail">
+                <Link to={`/details/${id}`}>
                     <Button size="small">Details</Button>
                 </Link>
             </CardActions>
