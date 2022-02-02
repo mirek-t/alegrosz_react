@@ -15,7 +15,7 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
-function FilterForm({topProducts, priceSort, handleChange}){
+function FilterForm({topProducts, priceSort, handleChange, handleSearchProduct, productName}){
     return (
         <Grid item  xs={3}>
             <Stack spacing={2}>
@@ -23,8 +23,9 @@ function FilterForm({topProducts, priceSort, handleChange}){
                     <Autocomplete
                         disablePortal
                         id="combo-box-demo"
+                        value={productName}
                         options={topProducts}
-                        onChange= {(evt, val) => (console.log(val))}
+                        onChange= {handleSearchProduct}
                         renderInput={(params) => <TextField {...params} label="Product" />}
                     />
                     <Stack mt={2} direction="row" alignItems="center" justifyContent="center">

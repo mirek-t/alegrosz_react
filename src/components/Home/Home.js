@@ -5,25 +5,54 @@ import { Container, Grid } from '@mui/material';
 
 import ProductCard from '../ProductCard/ProductCard';
 import FilterForm from '../FilterForm/FilterForm';
+import { useSearchParams } from 'react-router-dom';
 
 function Home() {
 
     const [products, setProducts] = useState([]);
     const [priceSort, setPriceSort] = useState("no");
     const [topProducts, setTopProducts] = useState([]);
+    const [productName, setProductName] = useState("");
+
+    const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
+        const price = searchParams.get("sortPrice");
+        const product = searchParams.get("product")
+        setPriceSort(price ? price : "no");
+        setProductName(product ? product : "");
         getProducts().catch(() => {});
     }, []);
+
+    useEffect(() => {
+        if (!(priceSort === "no" && productName === "")){
+            updateParams();
+        } else {
+            setSearchParams({});
+        }
+    }, [priceSort, productName]);
 
     const getProducts = async () => {
         const response = await axios.get("http://localhost:3000/products")
         setProducts(response.data);
-        setTopProducts(response.data.map((item) => ({label: item.name, id: item.id})));
+        setTopProducts(response.data.map((item) => ({label: item.name})));
     };
+    
+    
+    const updateParams = () => {
+        setSearchParams({
+            "sortPrice": priceSort,
+            "product": productName
+        });
+    }
 
     const handleChange = (evt) => {
         setPriceSort(evt.target.value);
+
+    };
+    
+    const handleSearchProduct = (evt, val) => {
+        setProductName(val ? val?.label : "");
     };
 
     return (
@@ -31,10 +60,10 @@ function Home() {
             <Container maxWidth="xl">
                 <Grid container spacing={2} mt={2}>
                     <Grid container>
-                        <FilterForm topProducts={topProducts} handleChange={handleChange} priceSort={priceSort}/>
+                        <FilterForm handleSearchProduct={handleSearchProduct} topProducts={topProducts} handleChange={handleChange} priceSort={priceSort} productName={productName}/>
                     </Grid>
                     <Grid container spacing={2} >
-                        {[...products].sort((a, b)=>{
+                        {[...products].filter(item => productName === "" ? true : item.name===productName).sort((a, b) => {
                             if (priceSort === "asc"){ 
                                 return a.price < b.price ? -1 : 1
                             } else if (priceSort === "desc"){

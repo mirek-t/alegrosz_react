@@ -9,10 +9,10 @@
         },
         {
             "id": 2,
-            "name": "Peugeout",
+            "name": "Peugeot",
             "price": 25.79,
             "description": "francuskie auto",
-            "shortDescription": "Opis samochodu Peugeout"
+            "shortDescription": "Opis samochodu Peugeot"
         },
         {
             "id": 3,
