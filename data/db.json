@@ -1,0 +1,32 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "name": "Audi",
+            "price": 5.87,
+            "description": "niemieckie auto",
+            "shortDescription": "Opis samochodu Audi"
+        },
+        {
+            "id": 2,
+            "name": "Peugeout",
+            "price": 25.79,
+            "description": "francuskie auto",
+            "shortDescription": "Opis samochodu Peugeout"
+        },
+        {
+            "id": 3,
+            "name": "Toyota",
+            "price": 52.26,
+            "description": "japońskie auto",
+            "shortDescription": "Opis samochodu Toyota"
+        },
+        {
+            "id": 4,
+            "name": "Buick",
+            "price": 48.49,
+            "description": "amerykańskie auto",
+            "shortDescription": "Opis samochodu Buick"
+        }
+    ]
+}

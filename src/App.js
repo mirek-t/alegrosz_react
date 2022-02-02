@@ -1,9 +1,10 @@
-import MainAppBar from "./components/MainAppbar/MainAppbar";
-import Home from "./components/Home/Home";
-import Details from "./components/Detail/Details";
 import {BrowserRouter,Routes,Route} from "react-router-dom";
 
-import "./App.css"
+import MainAppBar from "./components/MainAppbar/MainAppbar";
+import Home from "./components/Home/Home";
+import Detail from "./components/Detail/Detail";
+
+import "./App.css";
 
 function App() {
     return (
@@ -11,8 +12,8 @@ function App() {
             <BrowserRouter>
                 <MainAppBar/>
                 <Routes>
-                    <Route path="/" element={<Home    />}/>
-                    <Route path="/detail" element={<Details />}/>
+                    <Route path="/" element={<Home/>}/>
+                    <Route path="/detail" element={<Detail/>}/>
                 </Routes>
             </BrowserRouter>
         </div>
