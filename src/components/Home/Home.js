@@ -6,18 +6,11 @@ import { Container, Grid } from '@mui/material';
 import ProductCard from '../ProductCard/ProductCard';
 import FilterForm from '../FilterForm/FilterForm';
 
-
-const topProducts = [
-    { label: 'piwo' },
-    { label: 'cukier' },
-    { label: 'mleko' },
-    { label: 'śruby M10' }
-];
-
 function Home() {
 
     const [products, setProducts] = useState([]);
     const [priceSort, setPriceSort] = useState("no");
+    const [topProducts, setTopProducts] = useState([]);
 
     useEffect(() => {
         getProducts().catch(() => {});
@@ -25,7 +18,8 @@ function Home() {
 
     const getProducts = async () => {
         const response = await axios.get("http://localhost:3000/products")
-        setProducts(response.data)
+        setProducts(response.data);
+        setTopProducts(response.data.map((item) => ({label: item.name, id: item.id})));
     };
 
     const handleChange = (evt) => {
@@ -36,10 +30,10 @@ function Home() {
         <div>
             <Container maxWidth="xl">
                 <Grid container spacing={2} mt={2}>
-                    <Grid container xs={3}>
+                    <Grid container>
                         <FilterForm topProducts={topProducts} handleChange={handleChange} priceSort={priceSort}/>
                     </Grid>
-                    <Grid container spacing={2} xs={9}>
+                    <Grid container spacing={2} >
                         {[...products].sort((a, b)=>{
                             if (priceSort === "asc"){ 
                                 return a.price < b.price ? -1 : 1

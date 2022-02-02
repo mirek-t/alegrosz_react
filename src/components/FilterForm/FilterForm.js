@@ -17,13 +17,14 @@ const Item = styled(Paper)(({ theme }) => ({
 
 function FilterForm({topProducts, priceSort, handleChange}){
     return (
-        <Grid item  xs={10}>
+        <Grid item  xs={3}>
             <Stack spacing={2}>
                 <Item>
                     <Autocomplete
                         disablePortal
                         id="combo-box-demo"
                         options={topProducts}
+                        onChange= {(evt, val) => (console.log(val))}
                         renderInput={(params) => <TextField {...params} label="Product" />}
                     />
                     <Stack mt={2} direction="row" alignItems="center" justifyContent="center">
